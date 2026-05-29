@@ -337,7 +337,7 @@ Create `tsconfig.validate.json` that excludes CLI entry points, scrapers, worker
 
 **E2E (obrigatorio para fluxos de dinheiro):** Playwright. Cenarios: login>core flow>completion, pricing>checkout>webhook. DB limpo entre testes.
 
-**Mutation (obrigatorio apos unit):** Stryker. Score >= 80%, money-handling >= 90%. Meta: 100% com equivalent mutant exclusions documentadas. Mutantes sobreviventes = teste falso. Mutantes equivalentes (ternaries que sempre produzem mesmo valor, memory optimization code, fallback keys funcionalmente identicos) sao excluidos via line ranges no `mutate` config com documentacao do motivo. Ver `test-driven-development` skill `references/stryker-workflow.md` para workflow completo.
+**Mutation (obrigatorio apos unit):** Stryker. Score >= 80%, money-handling >= 90%. Meta: 100% com equivalent mutant exclusions documentadas. Mutantes sobreviventes = teste falso.
 
 **Contract (obrigatorio para APIs):** Zod schema compartilhado. API valida saida, frontend valida entrada. Contratos em `src/lib/contracts/`.
 
