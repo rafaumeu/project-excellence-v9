@@ -1,47 +1,59 @@
-# Project Excellence v9
+# Project Excellence v9 — Portal Status
 
-Padrão obrigatório de excelência para TODO projeto. Spec-Driven com contrato executável, Context Engineering, OWASP 2025 (A03 Supply Chain + A10 Exceptional Conditions), OWASP ASI Agent Security, Solo Dev Playbook, Error Budget Policy, Testing Pirâmide, DORA 2025, AI Quality Metrics. **Regra, não guideline.**
+> Source of truth da skill. Atualizado em 2026-05-29.
 
-## Estrutura
+## O que é
 
-```
-.
-├── SKILL.md                      # Skill principal (Hermes Agent format)
-├── README.md                     # Este arquivo
-├── references/                   # Conhecimento aprofundado
-│   ├── ai-agent-governance.md    # OWASP ASI Top 10 + controles
-│   ├── ci-templates.md           # Snippets CI/CD reutilizáveis
-│   ├── coverage-gap-workflow.md  # Workflow para fechar gaps de coverage
-│   ├── pitfalls-all.md           # 78 armadilhas conhecidas
-│   ├── solo-dev-playbook.md      # Anti-patterns + práticas solo dev
-│   ├── sre-research.md           # SLOs, Error Budget, DORA
-│   ├── supabase-quick-reference.md
-│   ├── pentest-framework.md
-│   ├── v8-coverage-patterns.md
-│   └── ...
-└── templates/
-    ├── biome-template.json
-    └── project-status-template.md
-```
+Framework de excelência obrigatório para todo projeto de software. Spec-Driven com contrato executável, OWASP 2025 (A03 Supply Chain + A10 Exceptional Conditions), OWASP ASI Agent Security, Solo Dev Playbook, Error Budget Policy, Testing Pirâmide, DORA 2025, AI Quality Metrics.
 
-## Tripé
+**Regra, não guideline.** Toda feature, todo projeto, todo commit segue este pipeline.
 
-1. **SPEC** — Contrato executável + Context Engineering
-2. **SECURITY** — OWASP 2025 + ASI Agent Security
-3. **CI** — Gates automatizados (Biome + Vitest 100% + tsc + audit)
+## Branch Atual
 
-## Regras Absolutas
+- **main** (HEAD: `31059b5`) — v9.0.0, release estável
 
-1. Sem spec, sem código
-2. CI vermelho nunca mergea
-3. validate:pr antes de todo push
-4. Nunca push direto pra main
-5. Todo banco tem RLS. PII = FORCE RLS
-6. Specs < 200 LOC
-7. Pentest antes de deploy. 8 categorias
-8. DELETE debug/admin routes antes de deploy
-9. Nunca hardcoded secrets/keys
-10. Testing pirâmide + mutation >= 85%
+## Excelência — O que TEM vs o que FALTA
+
+### CI/CD — 100% ✅
+
+| Item | Status | Detalhe |
+|------|--------|---------|
+| GitHub repo privado | ✅ | github.com/rafaumeu/project-excellence-v9 |
+| Estrutura completa | ✅ | SKILL.md + 17 references + 2 templates |
+| README template | ✅ | Adaptado do project-status-template |
+
+### References completas — 17/17 ✅
+
+| Item | Status | Detalhe |
+|------|--------|---------|
+| ai-agent-governance.md | ✅ | OWASP ASI Top 10 + controles |
+| ci-templates.md | ✅ | Snippets CI/CD |
+| coverage-gap-workflow.md | ✅ | Workflow p/ fechar gaps |
+| pitfalls-all.md | ✅ | 78 armadilhas categorizadas |
+| solo-dev-playbook.md | ✅ | Anti-patterns solo dev |
+| sre-research.md | ✅ | SLOs, Error Budget, DORA |
+| supabase-quick-reference.md | ✅ | Patterns Supabase + LGPD |
+| pentest-framework.md | ✅ | 8 categorias de pentest |
+| v8-coverage-patterns.md | ✅ | Padrões coverage v8 |
+| + mais 7 references | ✅ | Diversos tópicos |
+
+### Faltando:
+
+- [ ] CI workflow `.github/workflows/ci.yml` (lint + validação do SKILL.md)
+- [ ] LICENSE file (MIT explícito)
+- [ ] Dependabot (se aplicável) — repo documental, sem dependências
+
+## Proximos Passos (Prioridade)
+
+1. Adicionar CI workflow pra validar formatação dos .md
+2. Adicionar arquivo LICENSE (MIT)
+3. Evoluir para v10 conforme novos padrões OWASP/ASI
+
+## Decisões
+
+- **SKILL.md como spec principal** — formato Hermes Agent com frontmatter YAML
+- **references/ como deep knowledge** — carregado sob demanda, não polui o contexto
+- **README como portal status** — adaptado do project-status-template com seção "O que TEM vs FALTA"
 
 ---
 
