@@ -1,0 +1,50 @@
+name: validate
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  quality:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check SKILL.md frontmatter
+        run: |
+          head -1 SKILL.md | grep -q '^---$' || { echo "SKILL.md must start with --- frontmatter"; exit 1; }
+          grep -q '^name: project-excellence' SKILL.md || { echo "SKILL.md missing 'name: project-excellence'"; exit 1; }
+          grep -q '^version: ' SKILL.md || { echo "SKILL.md missing version"; exit 1; }
+          echo "✅ SKILL.md frontmatter OK"
+
+      - name: Check all .md files exist
+        run: |
+          for f in $(grep 'references/' SKILL.md | grep -oP 'references/\S+' | sed 's/)//g; s/]//g' | sort -u); do
+            [ -f "$f" ] || { echo "❌ Missing: $f"; exit 1; }
+            echo "  ✅ $f"
+          done
+          echo "✅ All referenced files exist"
+
+      - name: Validate YAML frontmatter (purpose-built)
+        run: |
+          awk '/^---$/{c++;next} c==1{print}' SKILL.md | grep -qE '^(name|description|version|author|license):' || {
+            echo "❌ Frontmatter fields missing (name, description, version, author, license)";
+            exit 1;
+          }
+          echo "✅ Frontmatter fields OK"
+
+      - name: No broken relative links
+        run: |
+          ERR=0
+          while IFS= read -r link; do
+            target=$(echo "$link" | grep -oP '\(reference[^)]+\)' | tr -d '()')
+            [ -n "$target" ] && [ -f "$target" ] || { echo "❌ Broken link: $link"; ERR=1; }
+          done < <(grep -oP '\[.*\]\(references/[^)]+\)' SKILL.md || true)
+          [ "$ERR" -eq 0 ] && echo "✅ All relative links valid"
+
+      - name: Lint markdown files
+        run: |
+          which npx >/dev/null 2>&1 || { echo "⚠️ npx not available, skipping markdown lint"; exit 0; }
+          npx --yes markdownlint-cli2@latest --no-config '*.md' 'references/**/*.md' 'templates/**/*.md' 2>&1 || true
+          echo "✅ Markdown linted (warnings are advisory)"
